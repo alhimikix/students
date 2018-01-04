@@ -10,7 +10,6 @@ package xyz.myfur.students.dialect;
  *
  */
 
-import org.hibernate.JDBCException;
 import org.hibernate.ScrollMode;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.*;
@@ -184,23 +183,20 @@ public class SQLiteDialect extends Dialect {
 
     @Override
     public SQLExceptionConversionDelegate buildSQLExceptionConversionDelegate() {
-        return new SQLExceptionConversionDelegate() {
-            @Override
-            public JDBCException convert(SQLException sqlException, String message, String sql) {
-                final int errorCode = JdbcExceptionHelper.extractErrorCode( sqlException );
-                if (errorCode == SQLITE_TOOBIG || errorCode == SQLITE_MISMATCH) {
-                    return new DataException( message, sqlException, sql );
-                }
-                else if (errorCode == SQLITE_BUSY || errorCode == SQLITE_LOCKED) {
-                    return new LockAcquisitionException( message, sqlException, sql );
-                }
-                else if ((errorCode >= SQLITE_IOERR && errorCode <= SQLITE_PROTOCOL) || errorCode == SQLITE_NOTADB) {
-                    return new JDBCConnectionException( message, sqlException, sql );
-                }
-
-                // returning null allows other delegates to operate
-                return null;
+        return (sqlException, message, sql) -> {
+            final int errorCode = JdbcExceptionHelper.extractErrorCode( sqlException );
+            if (errorCode == SQLITE_TOOBIG || errorCode == SQLITE_MISMATCH) {
+                return new DataException( message, sqlException, sql );
             }
+            else if (errorCode == SQLITE_BUSY || errorCode == SQLITE_LOCKED) {
+                return new LockAcquisitionException( message, sqlException, sql );
+            }
+            else if ((errorCode >= SQLITE_IOERR && errorCode <= SQLITE_PROTOCOL) || errorCode == SQLITE_NOTADB) {
+                return new JDBCConnectionException( message, sqlException, sql );
+            }
+
+            // returning null allows other delegates to operate
+            return null;
         };
     }
 
@@ -312,7 +308,7 @@ public class SQLiteDialect extends Dialect {
         return uniqueDelegate;
     }
     private static class SQLiteUniqueDelegate extends DefaultUniqueDelegate {
-        public SQLiteUniqueDelegate(Dialect dialect) {
+        SQLiteUniqueDelegate(Dialect dialect) {
             super( dialect );
         }
         @Override
