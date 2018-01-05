@@ -1,25 +1,23 @@
 package xyz.myfur.students;
 
 import freemarker.template.Configuration;
-import org.hibernate.validator.internal.constraintvalidators.bv.NullValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.servlet.View;
 
 
 import javax.annotation.PostConstruct;
+import java.util.Locale;
 
 @SpringBootApplication
 public class StudentsApplication {
 	
 	@Autowired
 	private Configuration fmk;
-	@Autowired
-	private NullValidator nullValidator;
 
 	@PostConstruct
 	public void addConstructorDb(){
+		Locale.setDefault(new Locale("uk_UA"));
 		fmk.setTemplateUpdateDelayMilliseconds(1500);
 		
 	}

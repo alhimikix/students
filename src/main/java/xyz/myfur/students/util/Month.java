@@ -14,6 +14,11 @@ public enum Month {
     NOVEMBER(10){public String getName(){return "NOVEMBER";}},
     DECEMBER(11){public String getName(){return "DECEMBER";}};
     private int id;
+
+    public int getId() {
+        return id+1;
+    }
+
     public abstract String getName();
     Month(int id){
         this.id=id;

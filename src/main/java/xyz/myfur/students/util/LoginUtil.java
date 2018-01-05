@@ -6,9 +6,12 @@ import xyz.myfur.students.Data.repositories.StudentsRepository;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
-
+/**Для логинизации и проверок
+ * @author anton
+ * */
 public class LoginUtil {
-    public static Student isLogin(StudentsRepository sr, Cookie id, Cookie password){
+    /**Для проверки нахождения в системе*/
+    public static Student isLogin(StudentsRepository sr, Cookie id, Cookie password,HttpServletResponse res){
         Student s = null;
 
         if (id==null||password==null){
@@ -23,8 +26,15 @@ public class LoginUtil {
         if (!s.getPassword().equals(password.getValue())){
             return null;
         }
+        id.setMaxAge(3600*60);
+        password.setMaxAge(3600*60);
+        res.addCookie(id);
+        res.addCookie(password);
         return s;
     }
+    /**
+     * Для авторизации
+     * */
     public static boolean Login(StudentsRepository sr, long id, String password,HttpServletResponse res){
         Cookie Id;
         Cookie Password;

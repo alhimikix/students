@@ -21,6 +21,21 @@ public class CalendarMy {
         }).findFirst().get();
 
     }
+    public static int getHours(long time){
+        Calendar c =new GregorianCalendar();
+        c.setTime(new Date(time));
+        return c.get(Calendar.HOUR_OF_DAY);
+    }
+    public static int getMinutes(long time){
+        Calendar c =new GregorianCalendar();
+        c.setTime(new Date(time));
+        return c.get(Calendar.MINUTE);
+    }
+    public static int getSeconds(long time){
+        Calendar c =new GregorianCalendar();
+        c.setTime(new Date(time));
+        return c.get(Calendar.SECOND);
+    }
 
 
 }

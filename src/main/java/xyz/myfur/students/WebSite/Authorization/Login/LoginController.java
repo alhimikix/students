@@ -22,9 +22,10 @@ public class LoginController {
     private StudentsRepository sr;
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String get(Map<String,Object>model,
+                      HttpServletResponse res,
                       @CookieValue(value = "id",required = false) Cookie ids,
                       @CookieValue(value = "password",required = false)Cookie passwords){
-        if (LoginUtil.isLogin(sr,ids,passwords)!=null){
+        if (LoginUtil.isLogin(sr,ids,passwords,res)!=null){
             return "redirect:/user";
         }
         model.put("error","");
