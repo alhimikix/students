@@ -1,6 +1,5 @@
 package xyz.myfur.students.Data;
 
-import lombok.Getter;
 import xyz.myfur.students.util.Day;
 
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.List;
 
 public class Schedule {
     private static volatile Schedule instance;
-    List<Part>partList;
+    private List<Part>partList;
 
     public List<Part> getPartList() {
         return partList;

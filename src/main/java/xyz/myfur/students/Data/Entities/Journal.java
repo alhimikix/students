@@ -20,4 +20,10 @@ public class Journal {
     private long studentid;
     @Column
     private long time;
+    @Column
+    private long month;
+    @Column
+    private long day;
+    @Column
+    private long year;
 }
