@@ -36,6 +36,11 @@ public class CalendarMy {
         c.setTime(new Date(time));
         return c.get(Calendar.SECOND);
     }
+    public static int getDate(long time){
+        Calendar c =new GregorianCalendar();
+        c.setTime(new Date(time));
+        return c.get(Calendar.DAY_OF_MONTH);
+    }
 
 
 }

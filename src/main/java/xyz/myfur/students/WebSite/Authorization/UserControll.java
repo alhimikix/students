@@ -65,12 +65,12 @@ public class UserControll {
         for (Part part : arrayList) {
             if (part.getDay().equals(day)){
                 if (hours>=part.getHour_start()&&hours<=part.getHour_end()){
-                    /*if (minutes>=part.getMin_start()&&minutes<=part.getMin_end()){
-                        if (seconds>=part.getSec_start()&&seconds<=part.getSec_end()){*/
+                    if (minutes+60*hours>=part.getMin_start()+60*part.getHour_start()&&minutes+60*hours<=part.getMin_end()+60*part.getHour_end()){
+                        if (seconds+3600*hours>=part.getSec_start()+3600*part.getHour_start()&&seconds+3600*hours<=part.getSec_end()+3600*part.getHour_end()){
                             isLesson=true;
                             break;
-                  /*      }
-                    }*/
+                        }
+                    }
                 }
             }
         }
