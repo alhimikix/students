@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import xyz.myfur.students.Data.Entities.Journal;
 import xyz.myfur.students.Data.Entities.Student;
 import xyz.myfur.students.Data.Part;
@@ -16,6 +17,7 @@ import xyz.myfur.students.util.LoginUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,13 @@ public class UserControll {
         if ((s = LoginUtil.isLogin(sr,id,password,res))==null){
             return "redirect:/login";
         }
+
+
+
         long time = System.currentTimeMillis();
+
+
+
         Day day = CalendarMy.getDay(time);
         int hours = CalendarMy.getHours(time);
         int minutes = CalendarMy.getMinutes(time);
@@ -77,11 +85,11 @@ public class UserControll {
             }
         }
         if (!isLesson){
-            model.put("message","Now you don't have lessons!");
+            model.put("message","Go to ass!");
             return "journal";
         }
         isLesson = false;
-        Collection<Journal> list = jr.findJournalsByDayAndMonthAndYear((long)day.getId(),(long)CalendarMy.getMonth(time).getId(),CalendarMy.getYear(time));
+        Collection<Journal> list = jr.findJournalsByDayAndMonthAndYearAndStudentid((long)day.getId(),(long)CalendarMy.getMonth(time).getId(),CalendarMy.getYear(time),s.getId());
 
         for (Journal j : list) {
              long time1 = j.getTime();
@@ -104,6 +112,10 @@ public class UserControll {
             model.put("message","Вы уже отметелись на даной паре!");
             return "journal";
         }
+
+
+
+
         Journal j =new Journal();
         j.setTime(time);
         j.setDay((long)day.getId());

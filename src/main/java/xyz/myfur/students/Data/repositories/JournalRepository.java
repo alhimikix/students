@@ -8,7 +8,7 @@ import java.util.Collection;
 
 @Repository
 public interface JournalRepository extends CrudRepository<Journal,Long> {
-    Collection<Journal>findJournalsByDayAndMonthAndYear(long day,long month,long year);
-    Collection<Journal>findJournalsByMonthAndYear(long month,long year);
-    Collection<Journal>findJournalsByYear(long year);
+    Collection<Journal>findJournalsByDayAndMonthAndYearAndStudentid(long day,long month,long year,long id);
+    Collection<Journal>findJournalsByMonthAndYearAndStudentid(long month,long year,long id);
+    Collection<Journal>findJournalsByYearAndStudentid(long year,long id);
 }

@@ -15,8 +15,8 @@ public class Schedule {
 
     private Schedule(){
         partList = new ArrayList<>();
-        Part p = new Part(Day.FRIDAY,19,0,0,22,0,0);
-        partList.add(p);
+        partList.add(new Part(Day.SATURDAY,8,10,15,10,10,15));
+        partList.add(new Part(Day.SATURDAY,10,20,15,11,20,15));
     }
 
 
