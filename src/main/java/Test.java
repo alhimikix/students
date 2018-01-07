@@ -7,8 +7,7 @@ public class Test {
     public static void main(String[]a){
 
 
-        System.out.println(CalendarMy.getDate(System.currentTimeMillis()));
-
+        System.out.println(java.time.Month.of(12).name());
 
     }
 }

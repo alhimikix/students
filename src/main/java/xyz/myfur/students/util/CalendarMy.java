@@ -8,13 +8,13 @@ import java.util.GregorianCalendar;
 public class CalendarMy {
 
     public static Day getDay(long time){
-        Date d =new Date();
-        GregorianCalendar gc =new GregorianCalendar();
-        gc.setGregorianChange(d);
+        Date d =new Date(time);
+        Calendar gc =new GregorianCalendar();
+        gc.setTime(d);
         //System.out.println((gc.get(Calendar.DAY_OF_WEEK)));
 
         return Arrays.stream(Day.values()).filter((x)->{
-            if (x.getId()==gc.get(Calendar.DAY_OF_WEEK)){
+            if (x.getId()==(gc.get(Calendar.DAY_OF_WEEK))){
                 return true;
             }
             return false;

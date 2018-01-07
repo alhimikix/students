@@ -33,7 +33,14 @@ public enum Day {
     };
 
     private int dayId;
-
+    public static Day day(int day){
+        for (Day day1 : Day.values()) {
+            if (day1.getId()==day){
+                return day1;
+            }
+        }
+        return Day.SUNDAY;
+    }
     Day(int dayId){
         this.dayId=dayId;
     }

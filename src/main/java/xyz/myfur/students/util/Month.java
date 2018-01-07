@@ -18,6 +18,14 @@ public enum Month {
     public int getId() {
         return id;
     }
+    public static Month month(int month){
+        for (Month month1 : Month.values()) {
+            if (month1.getId()==month){
+                return month1;
+            }
+        }
+        return Month.JANUARY;
+    }
 
     public abstract String getName();
     Month(int id){

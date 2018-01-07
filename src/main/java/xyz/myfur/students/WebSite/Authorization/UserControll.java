@@ -7,17 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import xyz.myfur.students.Data.Entities.Journal;
 import xyz.myfur.students.Data.Entities.Student;
+import xyz.myfur.students.Data.Group;
 import xyz.myfur.students.Data.Part;
 import xyz.myfur.students.Data.Schedule;
 import xyz.myfur.students.Data.repositories.JournalRepository;
 import xyz.myfur.students.Data.repositories.StudentsRepository;
+import xyz.myfur.students.WebSite.CalendarController;
 import xyz.myfur.students.util.CalendarMy;
 import xyz.myfur.students.util.Day;
 import xyz.myfur.students.util.LoginUtil;
+import xyz.myfur.students.util.Month;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +72,31 @@ public class UserControll {
         int hours = CalendarMy.getHours(time);
         int minutes = CalendarMy.getMinutes(time);
         int seconds = CalendarMy.getSeconds(time);
-        List<Part> arrayList =Schedule.getInstance().getPartList();
+
+
+        String key = s.getGrou();
+        if (Group.getInstance().getSchedules(key)==null){
+            model.put("message","Вам еще не создали расписание!");
+            List<Data> messages = new ArrayList<>();
+
+            List<Journal>jl = CalendarController.getJournals(s.getId(),CalendarMy.getYear(time),CalendarMy.getMonth(time).getId(),jr);
+
+            for (Journal jr : jl) {
+                Data d =new Data(Month.month((int)jr.getMonth()).getName(),CalendarMy.getDate(jr.getTime())+"",
+                        CalendarMy.getDay(jr.getTime()).getName(),
+                        CalendarMy.getHours(jr.getTime())+":"+CalendarMy.getMinutes(jr.getTime())+":"+CalendarMy.getSeconds(jr.getTime()));
+                messages.add(d);
+
+            }
+            messages.add(new Data("","","",""));
+            model.put("messages",messages);
+            return "journal";
+        }
+
+        List<Part> arrayList =Group.getInstance().getSchedules(key).getPartList();//Schedule.getInstance().getPartList();
+
+
+
         boolean isLesson =false;
         Part p = null;
         for (Part part : arrayList) {
@@ -85,7 +113,20 @@ public class UserControll {
             }
         }
         if (!isLesson){
-            model.put("message","Go to ass!");
+            model.put("message","Сейчас у вас нет уроков!");
+            List<Data> messages = new ArrayList<>();
+
+            List<Journal>jl = CalendarController.getJournals(s.getId(),CalendarMy.getYear(time),CalendarMy.getMonth(time).getId(),jr);
+
+            for (Journal jr : jl) {
+                Data d =new Data(Month.month((int)jr.getMonth()).getName(),CalendarMy.getDate(jr.getTime())+"",
+                        CalendarMy.getDay(jr.getTime()).getName(),
+                        CalendarMy.getHours(jr.getTime())+":"+CalendarMy.getMinutes(jr.getTime())+":"+CalendarMy.getSeconds(jr.getTime()));
+                messages.add(d);
+
+            }
+            messages.add(new Data("","","",""));
+            model.put("messages",messages);
             return "journal";
         }
         isLesson = false;
@@ -110,6 +151,19 @@ public class UserControll {
         }
         if (isLesson){
             model.put("message","Вы уже отметелись на даной паре!");
+            List<Data> messages = new ArrayList<>();
+
+            List<Journal>jl = CalendarController.getJournals(s.getId(),CalendarMy.getYear(time),CalendarMy.getMonth(time).getId(),jr);
+
+            for (Journal jr : jl) {
+                Data d =new Data(Month.month((int)jr.getMonth()).getName(),CalendarMy.getDate(jr.getTime())+"",
+                        CalendarMy.getDay(jr.getTime()).getName(),
+                        CalendarMy.getHours(jr.getTime())+":"+CalendarMy.getMinutes(jr.getTime())+":"+CalendarMy.getSeconds(jr.getTime()));
+                messages.add(d);
+
+            }
+            messages.add(new Data("","","",""));
+            model.put("messages",messages);
             return "journal";
         }
 
@@ -124,6 +178,21 @@ public class UserControll {
         j.setStudentid(s.getId());
         jr.save(j);
         model.put("message","Добавлена запись - "+day.getName()+" "+hours+":"+minutes+":"+seconds);
+
+
+        List<Data> messages = new ArrayList<>();
+
+        List<Journal>jl = CalendarController.getJournals(s.getId(),CalendarMy.getYear(time),CalendarMy.getMonth(time).getId(),jr);
+
+        for (Journal jr : jl) {
+            Data d =new Data(Month.month((int)jr.getMonth()).getName(),CalendarMy.getDate(jr.getTime())+"",
+                    CalendarMy.getDay(jr.getTime()).getName(),
+                    CalendarMy.getHours(jr.getTime())+":"+CalendarMy.getMinutes(jr.getTime())+":"+CalendarMy.getSeconds(jr.getTime()));
+            messages.add(d);
+
+        }
+        messages.add(new Data("","","",""));
+        model.put("messages",messages);
         return "journal";
     }
 

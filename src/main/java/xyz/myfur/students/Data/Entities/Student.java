@@ -25,4 +25,6 @@ public class Student {
     private String password;
     @Column
     private String Arhived;
+    @Column
+    private String grou;
 }
