@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Journal</title>
+</head>
+<body>
+<a href="/teacher/">User data</a><br>
+<form action="/teacher/journal"method="post">
+    <label for="id">Найти студента по id</label>
+    <input type="text" id="id" name="id"placeholder="12345">
+    <button type="submit">Найти</button>
+</form>
+<table border="1">
+    <caption>Журнал за месяц</caption>
+    <tr>
+        <th>Месяц</th>
+        <th>Дата</th>
+        <th>Д.Недели</th>
+        <th>Время</th>
+    </tr>
+    <#list messages as m>
+    <tr><td>${m.mouth}</td><td>${m.data}</td><td>${m.day}</td><td>${m.time}</td></tr>
+</#list>
+
+</table>
+</body>
+</html>

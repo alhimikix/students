@@ -21,7 +21,9 @@ public class Teacher {
     @Column
     private String lastname;
     @Column
+    private String password;
+    @Column
     private String rank;
     @Column
-    private boolean isArhived;
+    private boolean Arhived;
 }

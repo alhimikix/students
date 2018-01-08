@@ -56,7 +56,13 @@ public class CalendarController {
     }
     public static List<Journal> getJournals(long id, long year , long mouth, JournalRepository jr){
         List<Journal>js;
-        js = new ArrayList<>(jr.findJournalsByMonthAndYearAndStudentid(mouth, year, id));
+        try {
+
+            js = new ArrayList<>(jr.findJournalsByMonthAndYearAndStudentid(mouth, year, id));
+        }catch (Exception e){
+            return new ArrayList<>();
+        }
+
         return js;
     }
 }
