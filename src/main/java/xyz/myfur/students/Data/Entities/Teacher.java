@@ -25,5 +25,5 @@ public class Teacher {
     @Column
     private String rank;
     @Column
-    private boolean Arhived;
+    private String Arhived;
 }
